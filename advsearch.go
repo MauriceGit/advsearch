@@ -1,3 +1,25 @@
+// MIT License
+//
+// Copyright (c) 2018 Maurice Tollmien (maurice.tollmien@gmail.com)
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
 
 // sortedSearch searches elements in sorted slices or user defined collections of any kind
 // Because of the generic interfaces, sortedSearch can also be used to define possible insertion
@@ -65,32 +87,32 @@ func findRightInterval(s SearchableInterpolation, e interface{}, stepSize, start
     return thisStep
 }
 
-func quadSearch(s SearchableInterpolation, e interface{}, l, r, count int) (int, int, error) {
+func quadSearch(s SearchableInterpolation, e interface{}, l, r int) (int, error) {
 
     // Check against possible division by zero later.
     if s.Match(e, l) {
-        return l, count, nil
+        return l, nil
     }
     if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= EPS {
-        return -1, count, errors.New("No index could be found for the given element.")
+        return -1, errors.New("No index could be found for the given element.")
     }
 
     percentage := (s.ExtractValue(e) - s.GetValue(l)) / (s.GetValue(r) - s.GetValue(l))
 
     // When the element we are looking for is outside the given range
     if percentage > 1.0 || percentage < 0.0 {
-        return -1, count, errors.New("The element seems to be outside the given range.")
+        return -1, errors.New("The element seems to be outside the given range.")
     }
 
     index := int(percentage * float64(r-l) + float64(l))
 
     if s.Match(e, index) {
-        return index, count, nil
+        return index, nil
     }
     if s.Smaller(e, index) {
-        return quadSearch(s, e, findLeftInterval(s, e, int(math.Sqrt(float64(index-1-l))), index-1), index-1, count+1)
+        return quadSearch(s, e, findLeftInterval(s, e, int(math.Sqrt(float64(index-1-l))), index-1), index-1)
     }
-    return quadSearch(s, e, index+1, findRightInterval(s, e, int(math.Sqrt(float64(r-(index+1)))), index+1), count+1)
+    return quadSearch(s, e, index+1, findRightInterval(s, e, int(math.Sqrt(float64(r-(index+1)))), index+1))
 }
 
 // QuadraticBinarySearch searches a match of the element e in the sorted data structure s.
@@ -98,36 +120,36 @@ func quadSearch(s SearchableInterpolation, e interface{}, l, r, count int) (int,
 // Assuming that all methods of the interface Searchable and SearchableInterpolation run in O(1),
 // QuadraticBinarySearch will have a time complexity of θ(sqrt(n)) worst case and θ(log(log(n))) average case.
 // Pre-condition: s must be sorted!
-func QuadraticBinarySearch(s SearchableInterpolation, e interface{}) (int, int, error) {
-    return quadSearch(s, e, 0, s.Len()-1, 1)
+func QuadraticBinarySearch(s SearchableInterpolation, e interface{}) (int, error) {
+    return quadSearch(s, e, 0, s.Len()-1)
 }
 
-func intSearch(s SearchableInterpolation, e interface{}, l, r, count int) (int, int, error) {
+func intSearch(s SearchableInterpolation, e interface{}, l, r int) (int, error) {
 
     // Check against possible division by zero later.
     if s.Match(e, l) {
-        return l, count, nil
+        return l, nil
     }
     if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= EPS {
-        return -1, count, errors.New("No index could be found for the given element.")
+        return -1, errors.New("No index could be found for the given element.")
     }
 
     percentage := (s.ExtractValue(e) - s.GetValue(l)) / (s.GetValue(r) - s.GetValue(l))
 
     // When the element we are looking for is outside the given range
     if percentage > 1.0 || percentage < 0.0 {
-        return -1, count, errors.New("The element seems to be outside the given range.")
+        return -1, errors.New("The element seems to be outside the given range.")
     }
 
     index := int(percentage * float64(r-l) + float64(l))
 
     if s.Match(e, index) {
-        return index, count, nil
+        return index, nil
     }
     if s.Smaller(e, index) {
-        return intSearch(s, e, l, index-1, count+1)
+        return intSearch(s, e, l, index-1)
     }
-    return intSearch(s, e, index+1, r, count+1)
+    return intSearch(s, e, index+1, r)
 
 }
 
@@ -136,25 +158,25 @@ func intSearch(s SearchableInterpolation, e interface{}, l, r, count int) (int, 
 // Assuming that all methods of the interface Searchable and SearchableInterpolation run in O(1),
 // InterpolationSearch will have a time complexity of θ(n) worst case and θ(log(log(n))) average case.
 // Pre-condition: s must be sorted!
-func InterpolationSearch(s SearchableInterpolation, e interface{}) (int, int, error) {
-    return intSearch(s, e, 0, s.Len()-1, 1)
+func InterpolationSearch(s SearchableInterpolation, e interface{}) (int, error) {
+    return intSearch(s, e, 0, s.Len()-1)
 }
 
-func binSearch(s Searchable, e interface{}, l, r, count int) (int, int, error) {
+func binSearch(s Searchable, e interface{}, l, r int) (int, error) {
     if r < l {
-        return -1, count, errors.New("No index could be found for the given element in the data structure")
+        return -1, errors.New("No index could be found for the given element in the data structure")
     }
 
     index := (r+l)/2
 
     if s.Match(e, index) {
-        return index, count, nil
+        return index, nil
     }
 
     if s.Smaller(e, index) {
-        return binSearch(s, e, l, index-1, count+1)
+        return binSearch(s, e, l, index-1)
     }
-    return binSearch(s, e, index+1, r, count+1)
+    return binSearch(s, e, index+1, r)
 
 }
 
@@ -163,6 +185,6 @@ func binSearch(s Searchable, e interface{}, l, r, count int) (int, int, error) {
 // Assuming that all methods of the interface Searchable run in O(1), BinarySearch
 // will have a guaranteed time complexity of θ(log(n)) worst and average case.
 // Pre-condition: s must be sorted!
-func BinarySearch(s Searchable, e interface{}) (int, int, error) {
-    return binSearch(s, e, 0, s.Len()-1, 1)
+func BinarySearch(s Searchable, e interface{}) (int, error) {
+    return binSearch(s, e, 0, s.Len()-1)
 }
