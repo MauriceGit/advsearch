@@ -6,9 +6,7 @@ A Go library for advanced searching in sorted data structures
 
 
 
-Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
-
-
+### Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
 | Algorithm | Tests until found| Average Time in ns |
 | :---         |     :---       |          :--- |
 | Binary search           | 8.52 | 385 |
