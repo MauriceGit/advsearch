@@ -6,6 +6,12 @@ A Go library for advanced searching in sorted data structures
 
 
 
+| Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000 |
+| :---         |     :---:      |          ---: |
+| git status   | git status     | git status    |
+| git diff     | git diff       | git diff      |
+
+
 Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
 Binary search.           Tests: 8.52    Time: 385
 Interpolation search.    Tests: 2.96    Time: 352
