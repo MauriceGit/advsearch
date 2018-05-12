@@ -1,10 +1,20 @@
 # advsearch
-A Go library for advanced searching in sorted data structures
+A Go library for advanced searching in sorted data structures. The classic application would be
+searching the index of an element in a sorted slice or verifying that an element exists in a slice.
+
+By making this interface completely generic, neither the element type nor the data structure type
+is fixed.
+
+## Documentation:
+
+
+
+## Usage:
 
 
 
 
-## Performance measurements
+## Performance measurements:
 
 ### Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
 | Algorithm | Tests until found| Average Time in ns |
