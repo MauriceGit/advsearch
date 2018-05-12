@@ -10,9 +10,10 @@ Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
 
 
 | Algorithm | Tests until found| Average Time in ns |
-| :---         |     :---:      |          ---: |
-| git status   | git status     | git status    |
-| git diff     | git diff       | git diff      |
+| :---         |     :---       |          :--- |
+| Binary search           | 8.52 | 385 |
+| Interpolation search    | 2.96 | 352 |
+| Quadratic binary search | 2.61 | 362 |
 
 
 Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
