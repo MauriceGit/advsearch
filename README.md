@@ -55,9 +55,24 @@ Match(e interface{}, i int) bool
 >When searching the index of an element e, Match() should return True, when e and value at i are equal.
 >You may also look at the elements before or after i to determine a match (i.e. to find a possible insertion position).
 
+To be able to use InterpolationSearch and QuadraticBinarySearch, your data structure additionally has to implement the *SearchableInterpolation* interface (defined in advsearch.go).
 
+The *SearchableInterpolation* interface defines the following methods:
 
-A fully functional example of finding the index of an element in a sorted slice.
+```go
+GetValue(i int) float64
+```
+>Method to get a value at index i, that can be used to interpolate the approximate position in your data structure. Integers or other numbers can just
+>be casted to float64. This will not affect your search negatively.
+
+```go
+ExtractValue(e interface{}) float64
+```
+>e can be savely casted to the element type you use in your data structure!
+>ExtractValue extracts/converts a value from the given element e. Integers or other numbers can just
+>be casted to float64. This will not affect your search negatively.
+
+A fully functional example of finding the index of an element in a sorted slice:
 
 ```go
 package main
@@ -96,7 +111,6 @@ func main() {
     // Output: 3
 }
 ```
-
 
 ## Performance measurements:
 
