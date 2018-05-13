@@ -33,6 +33,28 @@ need to be compared to find the correct one.
 
 ## Usage:
 
+To be able to use the BinarySearch, your data structure has to implement the *Searchable* interface (defined in advsearch.go).
+
+The *Searchable* interface defines the following methods:
+- ```go
+Smaller(e interface{}, i int) bool
+```
+e can be savely casted to the element type you use in your data structure!
+Smaller() should return True, if the value of e is smaller than the element at index i in your data structure.
+- ```go
+Len() int
+```
+Returns the length/element count of the data structure.
+- ```go
+Match(e interface{}, i int) bool
+```
+e can be savely casted to the element type you use in your data structure!
+Match defines if we have a match based on the index i.
+When searching the index of an element e, Match() should return True, when e and value at i are equal.
+You may also look at the elements before or after i to determine a match (i.e. to find a possible insertion position).
+
+
+
 A fully functional example of finding the index of an element in a sorted slice.
 
 ```go
