@@ -1,13 +1,35 @@
 # advsearch
 A Go library for advanced searching in sorted data structures. The classic application would be
-searching the index of an element in a sorted slice or verifying that an element exists in a slice.
+searching the index of an element or verifying that an element exists in a sorted slice.
 
 By making this interface completely generic, neither the element type nor the data structure type
-is fixed.
+is predetermined. The choice of interface definition and functionality are oriented and influenced by the *sort* library.
 
 ## Documentation:
 
+Three functions are defined for searching in sorted data structures:
 
+### _Binary Search_:
+
+Binary search guarantees a runtime within θ(log(n)) (worst and average case) and is the standard method used for finding
+an element in a sorted slice (Binary search for a few standard data types like int/float32 is already implemented in the *sort* library!).
+
+If you are in an academic field and have to guarantee logarithmic runtime, you should use Binary search!
+
+### _Interpolation Search_:
+
+Interpolation search has an improved average case runtime of θ(log(log(n))) but a worst case runtime of θ(n).
+If elements are uniformly distributed within your data structure, Interpolation search will yield much better
+results than Binary search. For highly irregular data, I recommend to try it in your special test case and
+possibly move to Quadratic Binary search, if the worst case kicks in too often.
+
+### _Quadratic Binary Search_:
+
+Quadratic Binary search improves the worst case runtime of Interpolation search to θ(sqrt(n)) while keeping the average
+runtime at θ(log(log(n))). If your data is very uniformly distributed, it will be a little slower than Interpolation searching
+because of a slight internal overhead (see Performance measurements). In all other cases and generally more irregular data distribution,
+Quadratic Binary search will perform better than Interpolation search both in time the function takes and how many elements
+need to be compared to find the correct one.
 
 ## Usage:
 
@@ -31,59 +53,3 @@ Data structure: []int, Averaged Test Cases: 1000000
 | Binary search           | 385      | 487       | 618        | 835         | 1190         | 1624          |
 | Interpolation search    | 352      | 393       | 420        | 499         | 578          | 636           |
 | Quadratic binary search | 362      | 415       | 446        | 526         | 617          | 698           |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-### Data structure: []int, Element count: 1000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 8.52 | 385 |
-| Interpolation search    | 2.96 | 352 |
-| Quadratic binary search | 2.61 | 362 |
-
-### Data structure: []int, Element count: 10000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 11.86 | 487 |
-| Interpolation search    | 3.38  | 393 |
-| Quadratic binary search | 2.93  | 415 |
-
-### Data structure: []int, Element count: 100000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 15.18 | 618 |
-| Interpolation search    | 3.64  | 420 |
-| Quadratic binary search | 3.18  | 446 |
-
-### Data structure: []int, Element count: 1000000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 18.45 | 835 |
-| Interpolation search    | 4.08  | 499 |
-| Quadratic binary search | 3.51  | 526 |
-
-### Data structure: []int, Element count: 10000000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 21.82 | 1190 |
-| Interpolation search    | 4.25  | 578  |
-| Quadratic binary search | 3.69  | 617  |
-
-### Data structure: []int, Element count: 100000000, Averaged Test Cases: 1000000
-| Algorithm | Tests until found| Average Time in ns |
-| :--- | :--- | :--- |
-| Binary search           | 25.14 | 1624 |
-| Interpolation search    | 4.52  | 636  |
-| Quadratic binary search | 3.88  | 698  |
