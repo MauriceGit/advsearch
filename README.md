@@ -3,7 +3,7 @@ A Go library for advanced searching in sorted data structures. The classic appli
 searching the index of an element or verifying that an element exists in a sorted slice.
 
 By making this interface completely generic, neither the element type nor the data structure type
-is predetermined. The choice of interface definition and functionality are oriented and influenced by the *sort* library.
+is predetermined. The choice of interface definition and functionality are oriented and influenced by the [*sort* library](https://golang.org/pkg/sort/).
 
 ## Documentation:
 
@@ -33,7 +33,45 @@ need to be compared to find the correct one.
 
 ## Usage:
 
+A fully functional example of finding the index of an element in a sorted slice.
 
+```go
+package main
+import (
+    "fmt"
+    "github.com/MauriceGit/advsearch"
+)
+
+type IntSlice []int
+
+// Len is part of Searchable.
+func (s *IntSlice) Len() int {
+    return len(s)
+}
+// Smaller is part of the Searchable interface
+func (s *IntSlice) Smaller(e interface{}, i int) bool {
+    return e.(int) < (*s)[i]
+}
+// Match is part of the Searchable interface
+func (s *IntSlice) Match(e interface{}, i int) bool {
+    return e.(int) == (*s)[i]
+}
+// GetValue is part of the SearchableInterpolation interface
+func (s *IntSlice) GetValue(i int) float64 {
+    return float64((*s)[i])
+}
+// ExtractValue is part of the SearchableInterpolation interface
+func (s *IntSlice) ExtractValue(e interface{}) float64 {
+    return float64(e.(int))
+}
+
+func main() {
+    s := IntSlice{1, 2, 3, 4, 5, 6} // sorted ascending
+    index, _ := advsearch.QuadraticBinarySearch(&s, 4)
+    fmt.Println(index)
+    // Output: 3
+}
+```
 
 
 ## Performance measurements:
