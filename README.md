@@ -45,13 +45,15 @@ Smaller() should return True, if the value of e is smaller than the element at i
 Len() int
 ```
 Returns the length/element count of the data structure.
-- ```go
+
+```go
 Match(e interface{}, i int) bool
 ```
-e can be savely casted to the element type you use in your data structure!
-Match defines if we have a match based on the index i.
-When searching the index of an element e, Match() should return True, when e and value at i are equal.
-You may also look at the elements before or after i to determine a match (i.e. to find a possible insertion position).
+
+⋅⋅⋅e can be savely casted to the element type you use in your data structure!
+⋅⋅⋅Match defines if we have a match based on the index i.
+⋅⋅⋅When searching the index of an element e, Match() should return True, when e and value at i are equal.
+⋅⋅⋅You may also look at the elements before or after i to determine a match (i.e. to find a possible insertion position).
 
 
 
