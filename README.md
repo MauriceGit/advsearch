@@ -3,7 +3,10 @@ A Go library for advanced searching in sorted data structures. The classic appli
 searching the index of an element or verifying that an element exists in a sorted slice.
 
 By making this interface completely generic, neither the element type nor the data structure type
-is predetermined. The choice of interface definition and functionality are oriented and influenced by the [*sort* library](https://golang.org/pkg/sort/).
+is predetermined. This way it is very easy to use i.e. InterpolationSearch on a slice of complex structs or
+any other kind of sorted collection with nearly any kind of data!
+
+The choice of interface definition and functionality are oriented and influenced by the [*sort* library](https://golang.org/pkg/sort/).
 
 ## Documentation:
 
