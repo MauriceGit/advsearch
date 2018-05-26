@@ -10,7 +10,8 @@ The choice of interface definition and functionality are oriented and influenced
 
 ## Documentation:
 
-Three functions are defined for searching in sorted data structures:
+Three functions are defined for searching in sorted data structures.
+For detailed functionality and API, please have a look at the generated Go Docs: [https://godoc.org/github.com/MauriceGit/advsearch](https://godoc.org/github.com/MauriceGit/advsearch).
 
 ### _Binary Search_:
 
