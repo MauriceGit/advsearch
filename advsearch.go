@@ -20,8 +20,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-// sortedSearch searches elements in sorted slices or user defined collections of any kind
-// Because of the generic interfaces, sortedSearch can also be used to define possible insertion
+// Package advsearch searches elements in sorted slices or user defined collections of any kind
+// Because of the generic interfaces, advsearch can also be used to define possible insertion
 // positions in a data structure or a position in a data structure based on other criteria
 // based on the user's implementation of the Match() function.
 package advsearch
@@ -32,10 +32,10 @@ import (
 )
 
 const (
-	EPS float64 = 0.0000001
+	eps float64 = 0.0000001
 )
 
-// Implement the Searchable interface to be able to use BinarySearch
+// Searchable is the interface to implement to be able to use BinarySearch
 // on your data structure.
 // The package requires that elements can be enumerated with an integer based index.
 type Searchable interface {
@@ -50,7 +50,7 @@ type Searchable interface {
 	Match(e interface{}, i int) bool
 }
 
-// Implement the SearchableInterpolation interface to be able to use
+// SearchableInterpolation is the interface to implement to be able to use
 // Interpolation Search and Quadratic Binary Search on your data structure.
 type SearchableInterpolation interface {
 	// We need all defined methods from Searchable
@@ -93,7 +93,7 @@ func quadSearch(s SearchableInterpolation, e interface{}, l, r int) (int, error)
 	if s.Match(e, l) {
 		return l, nil
 	}
-	if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= EPS {
+	if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= eps {
 		return -1, errors.New("No index could be found for the given element.")
 	}
 
@@ -130,7 +130,7 @@ func intSearch(s SearchableInterpolation, e interface{}, l, r int) (int, error) 
 	if s.Match(e, l) {
 		return l, nil
 	}
-	if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= EPS {
+	if r < l || math.Abs(s.GetValue(l)-s.GetValue(r)) <= eps {
 		return -1, errors.New("No index could be found for the given element.")
 	}
 
