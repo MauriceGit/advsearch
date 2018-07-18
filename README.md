@@ -1,3 +1,5 @@
+[![Go Report Card](https://goreportcard.com/badge/github.com/mauricegit/advsearch)](https://goreportcard.com/report/github.com/mauricegit/advsearch)
+
 # advsearch
 A Go library for advanced searching in sorted data structures. The classic application would be
 searching the index of an element or verifying that an element exists in a sorted slice.
